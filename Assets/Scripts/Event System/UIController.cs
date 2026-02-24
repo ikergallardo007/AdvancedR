@@ -10,11 +10,12 @@ public class UIController : MonoBehaviour
 	#region Fields
 	[SerializeField] private Slider _slider;
 	[SerializeField] private TextMeshProUGUI _pointsText;
-	#endregion
+	[SerializeField] private TextMeshProUGUI _levelText;
+    #endregion
 
-	#region Unity Callbacks
-	// Start is called before the first frame update
-	void Start()
+    #region Unity Callbacks
+    // Start is called before the first frame update
+    void Start()
     {
         
     }
@@ -36,7 +37,11 @@ public class UIController : MonoBehaviour
 		_pointsText.text = currentPoints.ToString();
 	}
 	#endregion
+	public void UpdateLevel(int currentLevel)
+	{
+        _levelText.text = "Level: " + currentLevel.ToString();
+    }
 
-	#region Private Methods
-	#endregion
+    #region Private Methods
+    #endregion
 }
