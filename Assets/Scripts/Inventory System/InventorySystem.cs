@@ -7,18 +7,10 @@ namespace Inventory
 {
 	public class InventorySystem : MonoBehaviour
 	{
-        #region Properties
-        [field: SerializeField] public List<Item> Items { get; set; }
-        #endregion
-
         #region Fields
         //TODO: Refactor: move this to UIController
         [Header("UI Reffs")]
 		[SerializeField] private UIController _ui;
-        [SerializeField] private ItemButtom _prefabButton;
-		[SerializeField] private Transform _inventoryPanel;
-		[SerializeField] private Button _useButton;
-		[SerializeField] private Button _sellButton;
 
 		[Header("Object Definition")]
 		[SerializeField] private Weapon[] _weapons;
@@ -26,49 +18,20 @@ namespace Inventory
 		[SerializeField] private Other[] _others;
 		[Header("Item Pool")]
 		[SerializeField] private List<Item> _items = new List<Item>();
-		//[Header("Item Seleced")]
-		//[SerializeField] private ItemButtom _currentItemSelected;
+
 		#endregion
 
 		#region Unity Callbacks
 		// Start is called before the first frame update
 		void Start()
 		{
-			//InitializeItems();
-			//InitializeUI();
-
-			//TODO: refactort
-			//_useButton.onClick.AddListener(UseCurrentItem);
-			//_sellButton.onClick.AddListener(SellCurrentItem);
-		}
+			_ui.SellAction += SellItem;
+			_ui.UseAction += UseItem;
+        }
 		
 		#endregion
 
 		#region Public Methods
-		//public void AddItem(ItemButtom buttonItemToAdd)
-		//{
-		//	ItemButtom newButtonItem = Instantiate(buttonItemToAdd, _inventoryPanel);
-		//	newButtonItem.CurrentItem = buttonItemToAdd.CurrentItem;
-		//	newButtonItem.OnClick += () => SelecItem(newButtonItem);
-		//}
-
-		//public void SelecItem(ItemButtom currentItem)
-		//{
-		//	_currentItemSelected = currentItem;
-		//	//If Sellable
-		//	if (_currentItemSelected.CurrentItem is ISellable)
-		//		_sellButton.gameObject.SetActive(true);
-		//	else
-		//		_sellButton.gameObject.SetActive(false);
-
-		//	//If Usable
-		//	if (_currentItemSelected.CurrentItem is IUsable)
-		//		_useButton.gameObject.SetActive(true);
-		//	else
-		//		_useButton.gameObject.SetActive(false);
-
-
-		//}
 		public List<Item> InitializeItems()
 		{
 			//Weapons
@@ -84,40 +47,26 @@ namespace Inventory
 				_items.Add(_others[i]);
 			return _items;
         }
-		public void Consume(ItemButtom currentItemSelected)
+
+		public void SellItem()
 		{
-			Destroy(currentItemSelected.gameObject);
-			//_ui.currentItemSelected = null;
-			//_sellButton.gameObject.SetActive(false);
-			//_useButton.gameObject.SetActive(false);
+			(_ui.CurrentItemSelected.CurrentItem as ISellable).Sell();
+			Consume(_ui.CurrentItemSelected);
+		}
+
+		public void UseItem()
+		{
+			(_ui.CurrentItemSelected.CurrentItem as IUsable).Use();
+			if (_ui.CurrentItemSelected.CurrentItem is IConsumable)
+				Consume(_ui.CurrentItemSelected);
 		}
 		#endregion
 
 		#region Private Methods
-		//private void InitializeUI()
-		//{
-		//	for (int i = 0; i < _items.Count; i++)
-		//	{
-		//		ItemButtom newButton = Instantiate(_prefabButton, _prefabButton.transform.parent);
-		//		newButton.CurrentItem = _items[i];
-		//		newButton.OnClick += () => AddItem(newButton);
-		//	}
-		//	_prefabButton.gameObject.SetActive(false);
-		//}
-
-		////Refactor
-		//private void SellCurrentItem()
-		//{
-		//	(_currentItemSelected.CurrentItem as ISellable).Sell();
-		//	Consume(_currentItemSelected);
-		//}
-		////Refactor
-		//private void UseCurrentItem()
-		//{
-		//	(_currentItemSelected.CurrentItem as IUsable).Use();
-		//	if (_currentItemSelected.CurrentItem is IConsumable)
-		//		Consume(_currentItemSelected);
-		//}
+		private void Consume(ItemButtom currentItemSelected)
+		{
+			Destroy(currentItemSelected.gameObject);
+		}
 
 
 		#endregion
