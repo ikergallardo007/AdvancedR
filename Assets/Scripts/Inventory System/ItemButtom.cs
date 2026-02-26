@@ -17,8 +17,8 @@ namespace Inventory
 			}
 			set
 			{
-				_currentItem = value;
-				_buttonText.text = _currentItem.Name;
+                _currentItem = value;
+				_buttonText.text = value.Name;
 			}
 		}
 		public event Action OnClick;
@@ -39,7 +39,7 @@ namespace Inventory
 			_buttonText = GetComponentInChildren<TextMeshProUGUI>();
 			//Delegate example
 			_button.onClick.AddListener(() => OnClick?.Invoke());
-		}
+        }
 
 		#endregion
 

@@ -12,8 +12,10 @@ namespace Inventory
 		#region Properties
 		[field: SerializeField] public float HealingPoints { get; set; }
 		[field: SerializeField] public float Price { get; set; }
+        #endregion
 
-		public float Sell()
+        #region Public Methods
+        public float Sell()
 		{
 			Debug.Log("Has ganado " + Price + " dineritos!");
 			return Price;
@@ -23,7 +25,7 @@ namespace Inventory
 		{
 			Debug.Log("Te comes " + Name + " y ganas " + HealingPoints + " vidas!!");
 		}
-		#endregion
+        #endregion
 
 	}
 }
