@@ -13,8 +13,8 @@ namespace Inventory
         #region Properties
         public ItemButtom CurrentItemSelected { get; set; }
 
-        public event System.Action SellAction;
-        public event System.Action UseAction;
+        public event System.Action OnSell;
+        public event System.Action OnUse;
         #endregion
 
         #region Fields
@@ -85,14 +85,14 @@ namespace Inventory
         // Invokes the sell action for the currently selected item and then deselects it
         private void SellCurrentItem()
         {
-            SellAction?.Invoke();
+            OnSell?.Invoke();
             DeselectItem();
         }
 
         // Invokes the use action for the currently selected item and then deselects it
         private void UseCurrentItem()
         {
-            UseAction?.Invoke();
+            OnUse?.Invoke();
             DeselectItem();
         }
 

@@ -25,8 +25,8 @@ namespace Inventory
 		// Start is called before the first frame update
 		void Start()
 		{
-			_ui.SellAction += SellItem;
-			_ui.UseAction += UseItem;
+			_ui.OnSell += OnSellItem;
+			_ui.OnUse += OnUseItem;
         }
 		
 		#endregion
@@ -47,22 +47,21 @@ namespace Inventory
 				_items.Add(_others[i]);
 			return _items;
         }
+		#endregion
 
-		public void SellItem()
+		#region Private Methods
+		private void OnSellItem()
 		{
 			(_ui.CurrentItemSelected.CurrentItem as ISellable).Sell();
 			Consume(_ui.CurrentItemSelected);
 		}
 
-		public void UseItem()
+		private void OnUseItem()
 		{
 			(_ui.CurrentItemSelected.CurrentItem as IUsable).Use();
 			if (_ui.CurrentItemSelected.CurrentItem is IConsumable)
 				Consume(_ui.CurrentItemSelected);
 		}
-		#endregion
-
-		#region Private Methods
 		private void Consume(ItemButtom currentItemSelected)
 		{
 			Destroy(currentItemSelected.gameObject);
