@@ -18,13 +18,18 @@ namespace Inventory
         #endregion
 
         #region Fields
-        [SerializeField] private ItemButtom _prefabButton;
-        [SerializeField] private Transform _itemPoolPanel;
+        [Header("Panels")]
         [SerializeField] private Transform _inventoryPanel;
+        [SerializeField] private Transform _itemPoolPanel;
+
+        [Header("Buttons")]
+        [SerializeField] private ItemButtom _prefabButton;
         [SerializeField] private Button _useButton;
         [SerializeField] private Button _sellButton;
-        [SerializeField] private List<Item> _items = new List<Item>();
+
+        [Header("Inventory")]
         [SerializeField] private InventorySystem _inventorySystem;
+        [SerializeField] private List<Item> _items = new List<Item>();
         #endregion
 
         #region Unity Callbacks

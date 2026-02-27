@@ -8,7 +8,6 @@ namespace Inventory
 	public class InventorySystem : MonoBehaviour
 	{
         #region Fields
-        //TODO: Refactor: move this to UIController
         [Header("UI Reffs")]
 		[SerializeField] private UIController _ui;
 
